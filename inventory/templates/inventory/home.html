@@ -2,9 +2,9 @@
 {% block content %}
 
 <div>
-    <a >Owners</a>
-    <a >Patients</a>
-    <a >Appointments</a>
+    <a href="{% url 'ingredientlist' %}">Ingredients</a>
+    <a href="{% url 'menuitemlist' %}">Menu Items</a>
+    <a href="{% url 'reciperequirementlist' %}">Recipe Requirements</a>
 </div>
 
 {% endblock %}
