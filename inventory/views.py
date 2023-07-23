@@ -23,6 +23,9 @@ class MenuItemList(ListView):
 class RecipeRequirementList(ListView):
     model = RecipeRequirement
 
+class PurchaseList(ListView):
+    model = Purchase
+
 # CRUD - (C)reate
 class SignUp(CreateView):
    form_class = UserCreationForm
