@@ -1,10 +1,11 @@
 from django.shortcuts import render
-from django.views.generic import ListView
+from django.views.generic import ListView, TemplateView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.contrib.auth.forms import UserCreationForm
+from django.db.models import Sum, F
 
 from .models import Ingredient,MenuItem,RecipeRequirement,Purchase
 from .forms import IngredientCreateForm, IngredientUpdateForm, MenuItemCreateForm, MenuItemUpdateForm, RecipeRequirementCreateForm, RecipeRequirementUpdateForm
@@ -31,6 +32,26 @@ class SignUp(CreateView):
    form_class = UserCreationForm
    success_url = reverse_lazy('login')
    template_name = 'registration/signup.html'
+
+class CostsAndRevenue(TemplateView):
+   template_name = 'inventory/costs_and_revenue.html'
+
+   def get_context_data(self, **kwargs):
+      context = super().get_context_data(**kwargs)
+      context["purchases"] = Purchase.objects.all()
+      revenue = Purchase.objects.aggregate(
+         revenue=Sum("menu_item__price"))["revenue"]
+      total_cost = 0
+      for purchase in Purchase.objects.all():
+         for recipe_requirement in purchase.menu_item.reciperequirement_set.all():
+               total_cost += recipe_requirement.ingredient.unit_price * \
+                  recipe_requirement.ingredient_quantity
+
+      context["revenue"] = revenue
+      context["total_cost"] = total_cost
+      context["profit"] = revenue - total_cost
+
+      return context
 
 class IngredientCreate(CreateView):
    model = Ingredient

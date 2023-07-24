@@ -91,12 +91,12 @@
     {% load static %}
     <ul>
         <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'ingredientlist' %}">Inventory</a></li>
         <li><a href="{% url 'menuitemlist' %}">Menu</a></li>
-        <li><a href="{% url 'ingredientlist' %}">Ingredients</a></li>
         <li><a href="{% url 'reciperequirementlist' %}">Recipe Requirements</a></li>
         <li><a href="{% url 'purchaselist' %}">Purchases</a></li>
+        <li><a href="{% url 'costsandrevenue' %}">Costs and revenue</a></li>
       </ul>
-    <h3>Welcome to Restaurant X {{ name }}!</h3>
         {% block content %}
         {% endblock %}
     </body>
