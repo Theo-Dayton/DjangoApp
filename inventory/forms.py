@@ -17,6 +17,11 @@ class RecipeRequirementCreateForm(forms.ModelForm):
         model = RecipeRequirement
         fields = ('menu_item', 'ingredient', 'ingredient_quantity')
 
+class PurchaseCreateForm(forms.ModelForm):
+    class Meta:
+        model = Purchase
+        fields = ('menu_item','timestamp')
+
 #CRUD - Update
 class IngredientUpdateForm(forms.ModelForm):
     class Meta:
@@ -26,7 +31,7 @@ class IngredientUpdateForm(forms.ModelForm):
 class MenuItemUpdateForm(forms.ModelForm):
     class Meta:
         model = MenuItem
-        fields = ('name', 'price', 'image_link')
+        fields = ('name', 'price')
 
 class RecipeRequirementUpdateForm(forms.ModelForm):
     class Meta:

@@ -8,7 +8,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.db.models import Sum, F
 
 from .models import Ingredient,MenuItem,RecipeRequirement,Purchase
-from .forms import IngredientCreateForm, IngredientUpdateForm, MenuItemCreateForm, MenuItemUpdateForm, RecipeRequirementCreateForm, RecipeRequirementUpdateForm
+from .forms import IngredientCreateForm, IngredientUpdateForm, PurchaseCreateForm, MenuItemCreateForm, MenuItemUpdateForm, RecipeRequirementCreateForm, RecipeRequirementUpdateForm
 
 
 def home(request):
@@ -19,7 +19,13 @@ class IngredientList(ListView):
    model = Ingredient
 
 class MenuItemList(ListView):
-    model = MenuItem
+   model = MenuItem
+
+   def get_context_data(self, **kwargs):
+      context = super().get_context_data(**kwargs)
+      context["reciperequirement_list"] = RecipeRequirement.objects.all()
+
+      return context
 
 class RecipeRequirementList(ListView):
     model = RecipeRequirement
@@ -59,18 +65,19 @@ class IngredientCreate(CreateView):
    form_class = IngredientCreateForm
 
 class MenuItemCreate(CreateView):
-    model=MenuItem
+    model= MenuItem
     template_name = 'inventory/menuitem_create_form.html'
     form_class = MenuItemCreateForm
 
 class RecipeRequirementCreate(CreateView):
-    model=RecipeRequirement
-    template_name = 'inventory/recipe_requirement_create_form.html'
+    model= RecipeRequirement
+    template_name = 'inventory/reciperequirement_create_form.html'
     form_class = RecipeRequirementCreateForm
 
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super().form_valid(form)
+class PurchaseCreate(CreateView):
+   model = Purchase
+   template_name = 'inventory/purchase_create_form.html'
+   form_class = PurchaseCreateForm
 
 class IngredientUpdate(UpdateView):
    model = Ingredient
