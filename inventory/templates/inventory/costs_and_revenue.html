@@ -2,18 +2,17 @@
 {% block content %}
 <h2>Total cost</h2>
 <table>
-  <th>{{ total_cost }}</th>
+  <th>{{ total_cost|floatformat:2 }}</th>
 </table>
-
 
 <h2>Revenue</h2>
 <table>
-  <th>{{ revenue }}</th>
+  <th>{{ revenue|floatformat:2 }}</th>
 </table>
 
 <h2>Total profit</h2>
 <table>
-  <th>{{ profit }}</th>
+  <th>{{ profit|floatformat:2 }}</th>
 </table>
 
 {% endblock %}

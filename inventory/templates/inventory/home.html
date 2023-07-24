@@ -2,9 +2,64 @@
 {% block content %}
 
 <h2>Inventory</h2>
+<table>
+    <tr>
+      <th>Name</th>
+      <th>Quantity and units</th>
+      <th>Unit Price</th>
+    </tr>
+    {% for ingredient in ingredients %}
+    <tr>
+    <tr>
+        <td>{{ ingredient.name|title }}</td>
+        <td>{{ ingredient.quantity }} {{ ingredient.unit }}</td>
+        <td>${{ ingredient.unit_price }}</td>
+    </tr>
+    {% endfor %}
+  </table>
 
 <h2>Menu</h2>
 
-<h3>Purchases</h3>
+<table>
+    <tr>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Ingredients needed</th>
+    </tr>
+    {% for menu_item in menuitems %}
+    <tr>
+    <tr>
+        <td>{{ menu_item.name|title }}</td>
+        <td>${{ menu_item.price }}</td>
+        <td>
+        {% for reciperequirement in reciperequirements %}
+        {% if reciperequirement.menu_item.name == menu_item.name %}
+        {{ reciperequirement.ingredient.name|title }}, 
+        {% endif %}
+        {% endfor %}
+    </tr>
+    
+    {% endfor %}
+  </table>
+
+<h2>Purchases</h2>
+
+
+<table>
+    <tr>
+      <th>Item</th>
+      <th>Time of purchase</th>
+    </tr>
+    {% for purchase in purchases %}
+    <tr>
+    <tr>
+        <td>{{ purchase.menu_item|title }}</td>
+        <td>{{ purchase.timestamp }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  </table>
+
+
 
 {% endblock %}

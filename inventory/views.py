@@ -11,8 +11,15 @@ from .models import Ingredient,MenuItem,RecipeRequirement,Purchase
 from .forms import IngredientCreateForm, IngredientUpdateForm, PurchaseCreateForm, MenuItemCreateForm, MenuItemUpdateForm, RecipeRequirementCreateForm, RecipeRequirementUpdateForm
 
 
-def home(request):
-   return render(request, 'inventory/home.html')
+class Home(TemplateView):
+   template_name = 'inventory/home.html'
+   def get_context_data(self, **kwargs):
+      context = super().get_context_data(**kwargs)
+      context["ingredients"] = Ingredient.objects.all()
+      context["menuitems"] = MenuItem.objects.all()
+      context["reciperequirements"] = RecipeRequirement.objects.all()
+      context["purchases"] = Purchase.objects.all()
+      return context
 
    # CRUD - (R)ead
 class IngredientList(ListView):
@@ -24,7 +31,6 @@ class MenuItemList(ListView):
    def get_context_data(self, **kwargs):
       context = super().get_context_data(**kwargs)
       context["reciperequirement_list"] = RecipeRequirement.objects.all()
-
       return context
 
 class RecipeRequirementList(ListView):

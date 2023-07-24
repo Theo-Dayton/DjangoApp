@@ -29,7 +29,6 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=30)),
                 ('price', models.IntegerField(default=0)),
-                ('image_link', models.CharField(max_length=60)),
             ],
         ),
         migrations.CreateModel(

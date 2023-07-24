@@ -16,7 +16,6 @@ class Ingredient(models.Model):
 class MenuItem(models.Model):
     name = models.CharField(max_length=30)
     price = models.FloatField(default=0)
-    image_link = models.CharField(max_length=60)
 
     def get_absolute_url(self):
         return '/menuitem/list'
