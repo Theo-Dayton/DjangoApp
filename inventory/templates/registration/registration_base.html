@@ -59,7 +59,8 @@
     }
 
     input[type=submit]:hover {
-        background-color: #45a049;
+        color: #000000;
+	    background: #F2F2F2;
     }
     
     div {
@@ -164,18 +165,7 @@
     </style>
     </head>
     <body>
-    {% load static %}
-      <nav id='menu'>
-        <input type='checkbox' id='responsive-menu' onclick='updatemenu()'><label></label>
-        <ul>
-            <li><a href="{% url 'home' %}">Home</a></li>
-            <li><a href="{% url 'ingredientlist' %}">Inventory</a></li>
-            <li><a href="{% url 'menuitemlist' %}">Menu</a></li>
-            <li><a href="{% url 'purchaselist' %}">Purchases</a></li>
-            <li><a href="{% url 'costsandrevenue' %}">Costs and revenue</a></li>
-            <li style = "float:right"><a href="{% url 'logout' %}">Logout</a></li>
-        </ul>
-      </nav>
-        {% block content %}
-        {% endblock %}
-    </body>
+        {% load static %}
+            {% block content %}
+            {% endblock %}
+        </body>

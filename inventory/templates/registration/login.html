@@ -1,0 +1,16 @@
+{% extends './registration_base.html' %}
+{% block content %}
+<h1>Please Login</h1>
+<form method="post" action="{% url 'login' %}">
+{% csrf_token %}
+<label for="username">Username:</label>
+<input type="text" name="username" placeholder="Username"><label for="password">Password:</label>
+<input type="password" name="password" placeholder="Password">
+<input class="btn" type="submit" name="" value="Login">
+</form>
+
+<h2>New user? Sign up here</h2>
+
+<a href="{% url 'signup' %}"><button class="btn">Sign up</button></a>
+
+{% endblock %}
