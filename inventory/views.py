@@ -37,24 +37,38 @@ class CostsAndRevenue(LoginRequiredMixin, TemplateView):
    def get_context_data(self, **kwargs):
       context = super().get_context_data(**kwargs)
       purchases = Purchase.objects.all()
-      revenue = Purchase.objects.aggregate(
-         revenue=Sum("menu_item__price"))["revenue"]
+      total_revenue = Purchase.objects.aggregate(
+         total_revenue=Sum("menu_item__price"))["total_revenue"]
       total_cost = 0
-      cost_list = []
+      revenue = []
+      costs= []
+
       for purchase in Purchase.objects.all():
-         cost_list.append(purchase.menu_item.price)
+         revenue.append(purchase.menu_item.price)
+         current_cost = 0
          for recipe_requirement in purchase.menu_item.reciperequirement_set.all():
                total_cost += recipe_requirement.ingredient.unit_price * \
                   recipe_requirement.ingredient_quantity
+               current_cost += recipe_requirement.ingredient.unit_price * \
+                  recipe_requirement.ingredient_quantity
+         costs.append(current_cost)
+
+      profit = []
+      for i in range(len(purchases)):
+         current_profit = revenue[i] - costs[i]
+         profit.append(current_profit)
 
       context["purchases"] = purchases
-      context["revenue"] = revenue
+      context["total_revenue"] = total_revenue
       context["total_cost"] = total_cost
-      context["profit"] = revenue - total_cost
+      context["total_profit"] = total_revenue - total_cost
       context["ingredients"] = Ingredient.objects.all()
       context["menuitems"] = MenuItem.objects.all()
       context["reciperequirements"] = RecipeRequirement.objects.all()
-      context['costs'] = cost_list
+      context['revenue'] = revenue
+      context['costs'] = costs
+      context['profit'] = profit
+
 
       return context
 

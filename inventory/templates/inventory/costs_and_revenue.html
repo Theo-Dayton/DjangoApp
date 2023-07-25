@@ -7,31 +7,31 @@
     font-weight: bold;; /* Use your preferred color */
 }</style>
 </head>
-
-<h2>Total cost</h2>
-<table>
-  <th>${{ total_cost|floatformat:2 }}</th>
-</table>
-
-<h2>Revenue</h2>
+<h2>Costs and Revenue</h2>
 <table>
   <th>Item</th>
   <th>Revenue</th>
+  <th>Total cost of ingredients</th>
+  <th>Profit</th>
   {% for purchase in purchases %}
   <tr>
       <td>{{ purchase.menu_item }}</td>
+      <td>${{ revenue|index:forloop.counter0 }}</td>
       <td>${{ costs|index:forloop.counter0 }}</td>
+      <td>${{ profit|index:forloop.counter0|floatformat:2 }}</td>
   </tr>
   {% endfor %}
   <tr>
-    <td>Total revenue</td>
-    <td>${{ revenue|floatformat:2 }}</td>
+    <td>Totals</td>
+    <td>${{ total_profit|floatformat:2 }}</td>
+    <td>${{ total_cost|floatformat:2 }}</td>
+    <td>${{ total_revenue|floatformat:2 }}</td>
   </tr>
 </table>
 
 <h2>Total profit</h2>
 <table>
-  <th>${{ profit|floatformat:2 }}</th>
+  <th>${{ total_profit|floatformat:2 }}</th>
 </table>
 
 {% endblock %}
