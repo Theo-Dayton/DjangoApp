@@ -1,5 +1,10 @@
 {% extends './base.html' %}
 {% block content %}
+<head>
+  <title>Inventory</title>
+</head>
+
+
 <h2>Restaurant Inventory</h2>
 <a href="{% url 'ingredientcreate' %}"><button class="btn">Add Ingredient</button></a>
 <table id="ingredients">

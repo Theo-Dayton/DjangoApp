@@ -1,5 +1,13 @@
 {% extends './base.html' %}
+{% load inventory_extras %}
 {% block content %}
+<head>
+  <title>Restaurant Profit</title>
+  <style>table tr:last-child {
+    font-weight: bold;; /* Use your preferred color */
+}</style>
+</head>
+
 <h2>Total cost</h2>
 <table>
   <th>${{ total_cost|floatformat:2 }}</th>
@@ -7,7 +15,18 @@
 
 <h2>Revenue</h2>
 <table>
-  <th>${{ revenue|floatformat:2 }}</th>
+  <th>Item</th>
+  <th>Revenue</th>
+  {% for purchase in purchases %}
+  <tr>
+      <td>{{ purchase.menu_item }}</td>
+      <td>${{ costs|index:forloop.counter0 }}</td>
+  </tr>
+  {% endfor %}
+  <tr>
+    <td>Total revenue</td>
+    <td>${{ revenue|floatformat:2 }}</td>
+  </tr>
 </table>
 
 <h2>Total profit</h2>

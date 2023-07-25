@@ -1,13 +1,16 @@
 {% extends './base.html' %}
 {% block content %}
+<head>
+  <title>Purchases</title>
+</head>
+
+
 <h2>Purchases</h2>
 <a href="{% url 'purchasecreate' %}"><button class="btn">Add Purchase</button></a>
 <table id="menu_items">
   <tr>
     <th>Item</th>
     <th>Time of purchase</th>
-    <th> </th>
-    <th> </th>
   </tr>
   {% for purchase in purchase_list %}
   <tr>

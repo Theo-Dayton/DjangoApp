@@ -31,46 +31,34 @@ def logout_view(request):
   logout(request)
   return redirect("home")
 
-# CRUD - (R)ead
-class IngredientList(LoginRequiredMixin, ListView):
-   model = Ingredient
-
-class MenuItemList(LoginRequiredMixin, ListView):
-   model = MenuItem
-
-   def get_context_data(self, **kwargs):
-      context = super().get_context_data(**kwargs)
-      context["reciperequirement_list"] = RecipeRequirement.objects.all()
-      return context
-
-class RecipeRequirementList(LoginRequiredMixin, ListView):
-    model = RecipeRequirement
-
-class PurchaseList(LoginRequiredMixin, ListView):
-    model = Purchase
-
-# CRUD - (C)reate
-
 class CostsAndRevenue(LoginRequiredMixin, TemplateView):
    template_name = 'inventory/costs_and_revenue.html'
 
    def get_context_data(self, **kwargs):
       context = super().get_context_data(**kwargs)
-      context["purchases"] = Purchase.objects.all()
+      purchases = Purchase.objects.all()
       revenue = Purchase.objects.aggregate(
          revenue=Sum("menu_item__price"))["revenue"]
       total_cost = 0
+      cost_list = []
       for purchase in Purchase.objects.all():
+         cost_list.append(purchase.menu_item.price)
          for recipe_requirement in purchase.menu_item.reciperequirement_set.all():
                total_cost += recipe_requirement.ingredient.unit_price * \
                   recipe_requirement.ingredient_quantity
 
+      context["purchases"] = purchases
       context["revenue"] = revenue
       context["total_cost"] = total_cost
       context["profit"] = revenue - total_cost
+      context["ingredients"] = Ingredient.objects.all()
+      context["menuitems"] = MenuItem.objects.all()
+      context["reciperequirements"] = RecipeRequirement.objects.all()
+      context['costs'] = cost_list
 
       return context
 
+# CRUD - (C)reate
 class IngredientCreate(LoginRequiredMixin, CreateView):
    model = Ingredient
    template_name = 'inventory/ingredient_create_form.html'
@@ -91,6 +79,30 @@ class PurchaseCreate(LoginRequiredMixin, CreateView):
    template_name = 'inventory/purchase_create_form.html'
    form_class = PurchaseCreateForm
 
+# CRUD - (R)ead
+class IngredientList(LoginRequiredMixin, ListView):
+   model = Ingredient
+
+class MenuItemList(LoginRequiredMixin, ListView):
+   model = MenuItem
+
+   def get_context_data(self, **kwargs):
+      context = super().get_context_data(**kwargs)
+      context["reciperequirement_list"] = RecipeRequirement.objects.all()
+      return context
+
+class RecipeRequirementList(LoginRequiredMixin, ListView):
+    model = RecipeRequirement
+    def get_context_data(self, **kwargs):
+      context = super().get_context_data(**kwargs)
+      context["menuitems"] = MenuItem.objects.all()
+      return context
+    
+
+class PurchaseList(LoginRequiredMixin, ListView):
+    model = Purchase
+
+# CRUD - (U)pdate
 class IngredientUpdate(LoginRequiredMixin, UpdateView):
    model = Ingredient
    template_name = 'inventory/ingredient_update_form.html'

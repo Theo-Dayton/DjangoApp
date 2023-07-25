@@ -20,7 +20,6 @@ class Migration(migrations.Migration):
                 ('quantity', models.IntegerField(default=0)),
                 ('unit', models.CharField(max_length=30)),
                 ('unit_price', models.IntegerField(default=0)),
-                ('total_price', models.IntegerField(default=0)),
             ],
         ),
         migrations.CreateModel(

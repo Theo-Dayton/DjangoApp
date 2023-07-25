@@ -1,25 +1,32 @@
 {% extends './base.html' %}
 {% block content %}
+<head>
+  <title>Recipe Requirements</title>
+</head>
+
 <h2>Recipe Requirement List</h2>
 <a href="{% url 'reciperequirementcreate' %}"><button class="btn">Add Recipe Requirement</button></a>
 
+{% for item in menuitems %}
+<h3>{{ item.name }}</h3>
 <table id="reciperequirements">
   <tr>
-    <th>Name of Recipe</th>
     <th>Ingredient</th>
     <th>Ingredient quantity</th>
       <th> </th>
       <th> </th>
   </tr>
   {% for reciperequirement in reciperequirement_list %}
+  {% if reciperequirement.menu_item.name == item.name %}
   <tr>
   <tr>
-      <td>{{ reciperequirement.menu_item.name|title }}</td>
       <td>{{ reciperequirement.ingredient.name|title }}</td>
-      <td>{{ reciperequirement.ingredient_quantity }}</td>
-      <td><a href="{% url 'reciperequirementupdate' reciperequirement.id %}"><button>Edit</button></a></td>
-      <td><a href="{% url 'reciperequirementdelete' reciperequirement.id %}"><button>Delete</button></a></td>
+      <td>{{ reciperequirement.ingredient_quantity }} {{ reciperequirement.ingredient.unit|title }}</td>
+      <td><a href="{% url 'reciperequirementupdate' reciperequirement.id %}" ><button class="btn">Edit</button></a></td>
+      <td><a href="{% url 'reciperequirementdelete' reciperequirement.id %}" ><button class="btn">Delete</button></a></td>
   </tr>
+  {% endif %}
   {% endfor %}
 </table>
+{% endfor %}
 {% endblock %}

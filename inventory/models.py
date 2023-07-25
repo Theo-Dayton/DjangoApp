@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 class Ingredient(models.Model):
     name = models.CharField(max_length=30)
@@ -6,6 +7,10 @@ class Ingredient(models.Model):
     unit = models.CharField(max_length=30)
     unit_price = models.FloatField(default=0)
     total_price = models.IntegerField(default=0)
+
+    def save(self, *args, **kwargs):
+        self.profit = self.unit_price * self.quantity
+        super().save(*args, **kwargs)
 
     def get_absolute_url(self):
         return '/ingredient/list'
@@ -34,4 +39,7 @@ class RecipeRequirement(models.Model):
 
 class Purchase(models.Model):
     menu_item = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
-    timestamp = models.DateTimeField()
+    timestamp = models.DateTimeField(default=timezone.now)
+
+    def get_absolute_url(self):
+        return '/purchase/list'

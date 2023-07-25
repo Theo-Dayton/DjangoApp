@@ -5,7 +5,7 @@ from .models import Ingredient,MenuItem,RecipeRequirement,Purchase
 class IngredientCreateForm(forms.ModelForm):
     class Meta:
         model = Ingredient
-        fields = ('name', 'quantity', 'unit', 'unit_price', 'total_price')
+        fields = ('name', 'quantity', 'unit', 'unit_price')
 
 class MenuItemCreateForm(forms.ModelForm):
     class Meta:
@@ -26,7 +26,7 @@ class PurchaseCreateForm(forms.ModelForm):
 class IngredientUpdateForm(forms.ModelForm):
     class Meta:
         model = Ingredient
-        fields = ('name', 'quantity', 'unit', 'unit_price', 'total_price')
+        fields = ('name', 'quantity', 'unit', 'unit_price')
 
 class MenuItemUpdateForm(forms.ModelForm):
     class Meta:
