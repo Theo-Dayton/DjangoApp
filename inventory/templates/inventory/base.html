@@ -28,14 +28,20 @@
         background-color: #3B3B3B;;
         color: white;
     }
-    input[type=text], input[type=password], select {
+    input {
         width: 30%;
         padding: 12px 20px;
         margin: 8px 0;
         display: inline-block;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-sizing: border-box;
+        border-width: 2px;
+        border-color: #3b3b3b;
+        background-color: #ffffff;
+        border-style: solid;
+        border-radius: 15px;
+        text-shadow: 0px 0px 0px rgba(66,66,66,.0);
+    }
+    input:focus {
+        outline:none;
     }
     #image {
         position: fixed;
@@ -168,6 +174,8 @@
         background: #F2F2F2;
         color: #444444;
     }
+
+
     @media screen and (max-width: 800px){
         #menu {position:relative}
         #menu ul {background:#111;position:absolute;top:100%;right:0;left:0;z-index:3;height:auto;display:none}
